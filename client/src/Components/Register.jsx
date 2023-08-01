@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import {
-  Button, Container, TextField, Typography, useTheme, Grid, InputAdornment,IconButton
+  Button, Container, TextField, Typography, useTheme, Grid, InputAdornment, IconButton
 } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -89,7 +89,7 @@ const RegistrationForm = () => {
   const handleAvatarChange = (e) => {
     setAvatar(e.target.files[0]);
   };
-  
+
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
@@ -100,15 +100,16 @@ const RegistrationForm = () => {
         Register
       </Typography>
       <form className={classes.form} onSubmit={handleRegister}>
-      <input
+        <input
           accept="image/*"
           onChange={handleAvatarChange}
           className={classes.input}
           style={{ display: 'none' }}
           id="raised-button-file"
-          type="file" />
+          type="file"
+        />
         <label htmlFor="raised-button-file">
-          <Button variant="outlined" color="success" component="span"  className={classes.submitButton} >
+          <Button variant="outlined" color="success" component="span" className={classes.submitButton}>
             Choose profile avatar
           </Button>
         </label>
@@ -146,7 +147,7 @@ const RegistrationForm = () => {
             style: { color: theme.palette.text.primary },
           }}
         />
-         <TextField
+        <TextField
           variant="outlined"
           margin="normal"
           required
@@ -266,8 +267,6 @@ const RegistrationForm = () => {
             />
           }
         />
-        {/* <input type="file" accept="image/*" onChange={handleAvatarChange} /> */}
-        
         <Button
           type="submit"
           fullWidth

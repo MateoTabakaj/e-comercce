@@ -78,7 +78,8 @@ const LoginForm = () => {
         navigate('/');
     }
     } catch (error) {
-      setValidation(error.response.data.errors);
+      // setValidation(error.response.data.errors);
+      console.log(error.response)
       // Handle error, e.g., show an error message
     }
   };

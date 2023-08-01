@@ -20,8 +20,8 @@ const UserSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    required: [true, "Email is required"],
-    unique: [true, "This email is being used by another user"],
+    // required: [true, "Email is required"], 
+    // unique: [true, "This email is being used by another user"],
     validate: {
       validator: (val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val),
       message: "Please enter a valid email",
@@ -44,24 +44,14 @@ const UserSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Post',
   }],
-  likes: [{
+  followers: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Post',
+    ref: "User"
   }],
-  comments: [{
-    post: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Post',
-    },
-    text: {
-      type: String,
-      required: true,
-    },
-  }],
-  favorites: [{
+  following: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Post',
-  }],
+    ref: "User"
+  }]
 }, { timestamps: true });
 
 UserSchema.virtual('confirmPassword')

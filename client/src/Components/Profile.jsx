@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, Typography } from '@mui/material';
-import {makeStyles} from '@mui/styles'
+import { makeStyles } from '@mui/styles';
 import axios from 'axios';
-import Posts from '../Posts';
+import Posts from './Posts';
 
 const useStyles = makeStyles((theme) => ({
   profileCard: {
@@ -12,8 +12,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   avatar: {
-    width: '150px',
-    height: '70px',
+    width: '100px',
+    height: '100px',
+    borderRadius: '50%',
     marginBottom: theme.spacing(2),
   },
 }));
@@ -22,15 +23,16 @@ const Profile = () => {
   const classes = useStyles();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [id,setId]=useState('')
+  const [id, setId] = useState('');
 
   useEffect(() => {
     // Fetch user data from the backend
-    axios.get('http://localhost:8000/api/user', { withCredentials: true })
+    axios
+      .get('http://localhost:8000/api/user', { withCredentials: true })
       .then((response) => {
         setUser(response.data.user);
         console.log(response.data.user);
-        setId(response.data.user._id)
+        setId(response.data.user._id);
         setLoading(false);
       })
       .catch((error) => {
@@ -48,21 +50,28 @@ const Profile = () => {
     return <div>No user found.</div>;
   }
 
+  // Format the birthday as date, month, and year
+  const formattedBirthday = new Date(user.birthday).toLocaleDateString(undefined, {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+
   return (
     <Card className={classes.profileCard}>
       <CardContent>
         <Typography variant="h5" component="div">
-          User Info
+          {user.userName}
         </Typography>
         <img className={classes.avatar} src={user.avatar} alt="Profile Avatar" />
         <Typography variant="body1">
-          Name: {user.firstName} {user.lastName}
+          {user.firstName} {user.lastName}
         </Typography>
-        <Typography variant="body1">Email: {user.email}</Typography>
-        <Typography variant="body1">Birthday: {user.birthday}</Typography>
+        <Typography variant="body1">{user.email}</Typography>
+        <Typography variant="body1">{formattedBirthday}</Typography>
         {/* Display other user information here */}
       </CardContent>
-      <Posts id={id}/>
+      <Posts id={id} />
     </Card>
   );
 };
